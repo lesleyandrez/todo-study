@@ -1,34 +1,39 @@
-import Todo from './todo'
+import Todo from '../model/todoModel'
+import KEYS from '../common/keys'
 
-const ENTER_KEY = 13;
-const ESCAPE_KEY = 27;
+let todo;
 
-export default class todoRender extends Todo {
+export default class todoRender {
+
   constructor ({
     elementBase,
     itens = [],
-    startWithFocus = true
+    startWithFocus = false
   } = {}) {
-    super(itens);
+
+    todo = new Todo(itens);
     this.bindElements(elementBase);
     this.renderAllItens();
     this.startWithFocus(startWithFocus);
     this.addEventListeners();
   }
+
   bindElements (elementBase) {
     this.$element = elementBase;
     this.$list = elementBase.querySelector('ul.itens');
     this.$input = elementBase.querySelector('[name="item-lista"]');
   }
+
   startWithFocus (startWithFocus) {
     if(startWithFocus){
       this.$input.focus();
     }
   }
+
   addEventListeners () {
     this.$input.addEventListener('keyup', event => {
       const input = event.target;
-      if(event.keyCode == ENTER_KEY){
+      if(event.keyCode == KEYS.ENTER){
         let name = input.value;
         this.addItem({name});
       }
@@ -39,9 +44,10 @@ export default class todoRender extends Todo {
       }
     });
   }
+
   addItem (item) {
     try {
-      super.addItem(item);
+      todo.addItem(item);
       this.$list.insertAdjacentHTML('afterbegin', this.renderItem(item));
       this.$input.value = '';
       this.$input.focus();
@@ -49,18 +55,22 @@ export default class todoRender extends Todo {
       console.error(e.message);
     }
   }
+
   removeItem (id) {
     try {
-      super.removeItem(id);
+      todo.removeItem(id);
       this.$list.querySelector(`[data-id="${id}"]`).remove();
     } catch (e) {
       console.error(e.message);
     }
   }
+
   renderItem (item) {
     return `<li data-id="${item.id}"> <div> <div> <input type="checkbox" /> </div> <div class="name-item"> ${item.name} </div> <button type="button" class="remove-item">x</button> </div> </li>`;
   }
+
   renderAllItens () {
-    this.$list.innerHTML = this.itens.map(this.renderItem).join('');
+    this.$list.innerHTML = todo.getAll().map(this.renderItem).join('');
   }
+
 }
