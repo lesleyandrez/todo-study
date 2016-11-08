@@ -1,0 +1,46 @@
+{
+  "name": "todo-study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm-run-all --parallel watch:* server",
+    "server": "./node_modules/.bin/gulp",
+    "build:css": "./node_modules/.bin/node-sass ./src/scss/main.scss --output ./src/css/ --source-map ./src/css/main.css.map",
+    "watch:css": "npm run build:css -- --watch",
+    "build:js": "./node_modules/.bin/webpack",
+    "watch:js": "npm run build:js -- --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lesleyandrez/todo-study.git"
+  },
+  "keywords": [
+    "todo",
+    "study",
+    "vanilla"
+  ],
+  "author": "Lesley Andreza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lesleyandrez/todo-study/issues"
+  },
+  "homepage": "https://github.com/lesleyandrez/todo-study#readme",
+  "dependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "browser-sync": "^2.17.5",
+    "browser-sync-webpack-plugin": "^1.1.3",
+    "gitignore": "^0.6.0",
+    "gulp": "^3.9.1",
+    "node-sass": "^3.11.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
