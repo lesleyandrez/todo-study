@@ -1,0 +1,47 @@
+*{
+  font-family: sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.wrap{
+  background-color: #FAFAFA;
+  max-width: 800px;
+  margin: 0 auto;
+  .side-bar{
+    width: 200px;
+  }
+  .main{
+    flex: 1;
+  }
+}
+
+.category-style{
+  .itens{
+    list-style: none;
+  }
+}
+
+.todo-style{
+  .itens{
+    li{
+      list-style: none;
+      &>div{
+        display: flex;
+        padding: 8px;
+      }
+      .name-item{
+        flex: 1;
+      }
+    }
+  }
+  .input-item{
+    padding: 16px;
+    width: 100%;
+  }
+}
+
+.flex{
+  display: flex;
+}
