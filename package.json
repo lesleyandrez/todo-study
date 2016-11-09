@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm-run-all --parallel watch:* server",
+    "start": "./node_modules/.bin/npm-run-all --parallel watch:* server",
     "server": "./node_modules/.bin/gulp",
     "build:css": "./node_modules/.bin/node-sass ./src/scss/main.scss --output ./src/css/ --source-map ./src/css/main.css.map",
     "watch:css": "npm run build:css -- --watch",
@@ -40,6 +40,7 @@
     "gitignore": "^0.6.0",
     "gulp": "^3.9.1",
     "node-sass": "^3.11.1",
+    "npm-run-all": "^3.1.1",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   }

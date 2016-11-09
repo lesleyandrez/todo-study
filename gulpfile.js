@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 
 /**
-* Static Server + watching less/html files
+* Static Server + watching html/css/js files
 */
 gulp.task('serve', function(){
 

@@ -1,4 +1,4 @@
-import TodoRender from './presenter/todoRender'
+import TodoRender from './presenter/todoPresenter'
 
 const firstTodo = new TodoRender({
   itens: [
