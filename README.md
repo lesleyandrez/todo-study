@@ -14,6 +14,7 @@ Este é um projeto pessoal para estudos e experimentos dos novos recursos da lin
  - Entre na pasta do projeto `cd todo-study`
  - Estou usando o `yarn` e o `gulp` instalados globalmente, então se você ainda não tem eles instalados rode `npm install -g yarn gulp` no seu terminal
  - Instale as dependências do projeto com `yarn install`
+ - Agora para iniciar o modo desenvolvimento com live reload rode `npm start` no seu terminal
 
  \* Uso o `yarn` para adicionar, atualizar e remover as dependências, porque ele é muito mais rápido que o `npm` nesta tarefa e uso o `npm scripts` em conjunto com o `gulp` para automatizar as demais tarefas.
 
