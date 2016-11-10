@@ -11,18 +11,18 @@ export default class todoListPresenter {
    */
   constructor ({
     elementBase,
-    itens = [],
+    idStore,
     startWithFocus = false
   } = {}) {
 
-    // atribui uma instancia de Todo para a variável privada todo
-    todoList = new TodoList(itens);
+    // atribui uma instancia de TodoList para a variável privada todo
+    todoList = new TodoList(idStore);
 
     // associa os elementos HTML com as propriedades $element, #list e $input
     this.bindElements(elementBase);
 
     // se foi passada uma lista no constructor, monta o todoList com estes itens
-    if (itens.length > 0) { this.renderAllItens(); }
+    if (todoList.getAll().length > 0) { this.renderAllItens(); }
 
     // trás o foco para o $input se o paramentro startWithFocus = true
     this.startWithFocus(startWithFocus);

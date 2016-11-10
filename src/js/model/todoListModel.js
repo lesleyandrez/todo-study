@@ -1,10 +1,14 @@
 import TodoException from './todoException'
+import TodoListStore from './todoListStore'
 import gererateId from '../common/generateId'
+
+let todoListStore;
 
 export default class TodoList {
 
-  constructor (itens = []) {
-    this.itens = itens;
+  constructor (idStore) {
+    todoListStore = new TodoListStore(idStore);
+    this.itens = todoListStore.getStore();
   }
 
   addItem (item) {
@@ -15,6 +19,7 @@ export default class TodoList {
     item.checked = false;
     item.favorite = false;
     this.itens.unshift(item);
+    todoListStore.updateStore(this.getAll());
   }
 
   removeItem (id) {
