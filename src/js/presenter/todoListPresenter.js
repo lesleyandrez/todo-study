@@ -1,7 +1,7 @@
 import TodoList from '../model/todoListModel'
 import KEYS from '../common/keys'
 
-let todoList, $element, $input, $list;
+let todoList;
 
 export default class todoListPresenter {
 
@@ -32,26 +32,26 @@ export default class todoListPresenter {
   }
 
   bindElements (elementBase) {
-    $element = elementBase;
-    $list = elementBase.querySelector('ul.itens');
-    $input = elementBase.querySelector('[name="item-lista"]');
+    this.$element = elementBase;
+    this.$list = elementBase.querySelector('ul.itens');
+    this.$input = elementBase.querySelector('[name="item-lista"]');
   }
 
   startWithFocus (startWithFocus) {
     if(startWithFocus){
-      $input.focus();
+      this.$input.focus();
     }
   }
 
   addEventListeners () {
-    $input.addEventListener('keyup', event => {
+    this.$input.addEventListener('keyup', event => {
       const input = event.target;
       if(event.keyCode == KEYS.ENTER){
         let name = input.value;
         this.addItem({name});
       }
     });
-    $list.addEventListener('click', event => {
+    this.$list.addEventListener('click', event => {
       if(event.target.classList.contains('remove-item')){
         this.removeItem(event.target.closest('[data-id]').dataset.id);
       }
@@ -61,9 +61,9 @@ export default class todoListPresenter {
   addItem (item) {
     try {
       todoList.addItem(item);
-      $list.insertAdjacentHTML('afterbegin', this.renderItem(item));
-      $input.value = '';
-      $input.focus();
+      this.$list.insertAdjacentHTML('afterbegin', this.renderItem(item));
+      this.$input.value = '';
+      this.$input.focus();
     } catch (e) {
       console.error(e.message);
     }
@@ -72,7 +72,7 @@ export default class todoListPresenter {
   removeItem (id) {
     try {
       todoList.removeItem(id);
-      $list.querySelector(`[data-id="${id}"]`).remove();
+      this.$list.querySelector(`[data-id="${id}"]`).remove();
     } catch (e) {
       console.error(e.message);
     }
@@ -83,7 +83,7 @@ export default class todoListPresenter {
   }
 
   renderAllItens () {
-    $list.innerHTML = todoList.getAll().map(this.renderItem).join('');
+    this.$list.innerHTML = todoList.getAll().map(this.renderItem).join('');
   }
 
 }
