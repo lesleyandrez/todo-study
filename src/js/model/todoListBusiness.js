@@ -22,6 +22,7 @@ export default class TodoListBusiness {
 
   removeItem (id) {
     this.itens = this.itens.filter( currentItem => { return currentItem.id != id; });
+    this.todoListStore.updateStore(this.getAll());
   }
 
   updateItem (item) {
