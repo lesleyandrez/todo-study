@@ -1,7 +1,5 @@
-import TodoList from '../model/todoListModel'
+import TodoListBusiness from '../model/todoListBusiness'
 import KEYS from '../common/keys'
-
-let todoList;
 
 export default class todoListPresenter {
 
@@ -16,13 +14,13 @@ export default class todoListPresenter {
   } = {}) {
 
     // atribui uma instancia de TodoList para a variável privada todo
-    todoList = new TodoList(idStore);
+    this.todoListBusiness = new TodoListBusiness(idStore);
 
     // associa os elementos HTML com as propriedades $element, #list e $input
     this.bindElements(elementBase);
 
     // se foi passada uma lista no constructor, monta o todoList com estes itens
-    if (todoList.getAll().length > 0) { this.renderAllItens(); }
+    if (this.todoListBusiness.getAll().length > 0) { this.renderAllItens(); }
 
     // trás o foco para o $input se o paramentro startWithFocus = true
     this.startWithFocus(startWithFocus);
@@ -60,7 +58,7 @@ export default class todoListPresenter {
 
   addItem (item) {
     try {
-      todoList.addItem(item);
+      this.todoListBusiness.addItem(item);
       this.$list.insertAdjacentHTML('afterbegin', this.renderItem(item));
       this.$input.value = '';
       this.$input.focus();
@@ -71,7 +69,7 @@ export default class todoListPresenter {
 
   removeItem (id) {
     try {
-      todoList.removeItem(id);
+      this.todoListBusiness.removeItem(id);
       this.$list.querySelector(`[data-id="${id}"]`).remove();
     } catch (e) {
       console.error(e.message);
@@ -83,7 +81,7 @@ export default class todoListPresenter {
   }
 
   renderAllItens () {
-    this.$list.innerHTML = todoList.getAll().map(this.renderItem).join('');
+    this.$list.innerHTML = this.todoListBusiness.getAll().map(this.renderItem).join('');
   }
 
 }

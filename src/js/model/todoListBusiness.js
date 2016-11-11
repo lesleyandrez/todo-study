@@ -1,25 +1,23 @@
-import TodoException from './todoException'
+import TodoListException from './todoListException'
 import TodoListStore from './todoListStore'
 import gererateId from '../common/generateId'
 
-let todoListStore;
-
-export default class TodoList {
+export default class TodoListBusiness {
 
   constructor (idStore) {
-    todoListStore = new TodoListStore(idStore);
-    this.itens = todoListStore.getStore();
+    this.todoListStore = new TodoListStore(idStore);
+    this.itens = this.todoListStore.getStore();
   }
 
   addItem (item) {
     if (item.name == '') {
-      throw new TodoException("O item nao pode ser vazio!");
+      throw new TodoListException("O item nao pode ser vazio!");
     }
     item.id = gererateId();
     item.checked = false;
     item.favorite = false;
     this.itens.unshift(item);
-    todoListStore.updateStore(this.getAll());
+    this.todoListStore.updateStore(this.getAll());
   }
 
   removeItem (id) {
