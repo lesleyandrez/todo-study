@@ -3,42 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>async/await</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
-  <div class="wrap flex">
+  <div class="wrap">
 
     <section id="categorias" class="side-bar category-style">
-      <h1> Categorias </h1>
-      <ul class="itens">
-        <li>Categoria 1</li>
-        <li>Categoria 2</li>
-        <li>Categoria 3</li>
-        <li>Categoria 4</li>
-        <li>Categoria 5</li>
-        <li>Categoria 6</li>
-        <li>Categoria 7</li>
-        <li>Categoria 8</li>
-      </ul>
+      <section class="list-categories">
+        <h1> Listas </h1>
+        <ul class="itens">
+          <li>Carregando...</li>
+        </ul>
+      </section>
+      <section class="form-new-category">
+        <form action="new-list" method="post" id="form-new-list">
+          <input type="text" autocomplete="off" placeholder="Estudo, Trabalho, ..." name="name-list" />
+          <button type="submit">
+            Criar lista
+          </button>
+        </form>
+      </section>
     </section>
 
-    <section id="lista" class="main todo-style">
-      <header>
-        <input type="text" name="item-lista" placeholder="Digite um item e pressione Enter" class="input-item" />
-      </header>
-      <ul class="itens">
-        <li></li>
-      </ul>
-    </section>
+    <section id='container-todos' class="main">
 
-    <section id="lista2" class="main todo-style">
-      <header>
-        <input type="text" name="item-lista" placeholder="Digite um item e pressione Enter" class="input-item" />
-      </header>
-      <ul class="itens">
-        <li></li>
-      </ul>
     </section>
 
   </div>

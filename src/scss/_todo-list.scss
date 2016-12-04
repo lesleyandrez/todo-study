@@ -1,0 +1,161 @@
+.todo-style{
+  position: relative;
+  max-height: $height-wrap;
+  display: flex;
+  flex-direction: column;
+
+  .wrap-list{
+    @extend .scroll-bar;
+    flex: 1;
+    overflow-y: auto;
+
+    .itens:focus{
+      outline: none;
+    }
+  }
+
+  header{
+    flex: none;
+    padding: $space-default;
+    padding-bottom:  0;
+  }
+
+  h2{
+    @extend %truncate;
+    position: absolute;
+    font-weight: 600;
+    color: #555;
+    width: calc( 100% - 32px );
+  }
+  .itens{
+    flex: 1;
+    position: relative;
+
+    li{
+      list-style: none;
+      background-color: rgba(255, 255, 255, 1);
+      margin-left: $space-default;
+      margin-right: $space-default;
+      transition: box-shadow .2s;
+      border-radius: 3px;
+      position: relative;
+
+      &:first-child{
+        margin-top: $space-default;
+      }
+
+      &:last-child{
+        margin-bottom: $space-default;
+      }
+
+      &:focus{
+        outline: none;
+      }
+
+      .remove-item{
+        display: none;
+      }
+
+      &:hover{
+        .remove-item{
+          display: block;
+        }
+      }
+
+      &>div{
+        display: flex;
+        padding: ($space-default / 2);
+      }
+
+      .checkbox-item{
+        width: 0.1px;
+        height: 0.1px;
+        transform: scale(0.01);
+        opacity: .1;
+        position: absolute;
+
+        &:checked + div{
+          .name-item{
+            color: #AAA;
+            text-decoration: line-through;
+          }
+
+          .check-style{
+            &:before{
+              border-color: #2196F3;
+            }
+          }
+        }
+
+        &:focus + div{
+          outline: 1px dotted #EEE;
+          outline-offset:-1px;
+        }
+
+        &:hover + div{
+          .check-style{
+            border-color: #777;
+          }
+        }
+      }
+
+      .check-item{
+        width: 24px;
+        height: 24px;
+        margin-right: ($space-default / 2);
+
+        &:hover{
+          cursor: pointer;
+
+          .check-style{
+            border-color: #777;
+          }
+        }
+      }
+
+      .name-item{
+        flex: 1;
+        font-weight: 600;
+        color: #575757;
+        line-height: 24px;
+      }
+    }
+  }
+
+  .remove-item{
+    border: none;
+    background-color: transparent;
+    outline: none;
+    color: #CCC;
+    position: absolute;
+    right: $space-default / 2;
+    &:hover{
+      color: #555;
+      cursor: pointer;
+    }
+  }
+  .input-item{
+    margin-top: 32px;
+    padding: ($space-default / 2);
+    font-size: 1rem;
+    @extend %base-input;
+  }
+  .check-style{
+    border: 1px solid #DDD;
+    height: 16px;
+    width: 16px;
+    transform: translateY(4px);
+    display: block;
+
+    &:before{
+      content: '';
+      height: 10px;
+      width: 20px;
+      display: block;
+      border-left: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      transform: rotate(-45deg) translate(4px, -4px);
+      position: absolute;
+    }
+  }
+}

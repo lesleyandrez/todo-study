@@ -1,0 +1,24 @@
+.icon-x{
+  width: 24px;
+  height: 24px;
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  &:before, &:after{
+    content: '';
+    background-color: currentColor;
+    height: 16px;
+    width: 1px;
+    position: absolute;
+  }
+
+  &:before{
+    transform: rotate(45deg);
+  }
+
+  &:after{
+    transform: rotate(-45deg);
+  }
+}
