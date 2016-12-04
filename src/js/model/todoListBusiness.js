@@ -33,6 +33,7 @@ export default class TodoListBusiness {
         return currentItem;
       }
     });
+    this.todoListStore.updateStore(this.getAll());
   }
 
   checkItem (id) {
@@ -40,6 +41,7 @@ export default class TodoListBusiness {
       return currentItem.id == id;
     });
     this.itens[index].checked = true;
+    this.todoListStore.updateStore(this.getAll());
   }
 
   unCheckItem (id) {
@@ -47,6 +49,7 @@ export default class TodoListBusiness {
       return currentItem.id == id;
     });
     this.itens[index].checked = false;
+    this.todoListStore.updateStore(this.getAll());
   }
 
   getCheckeds () {

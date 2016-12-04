@@ -1,5 +1,21 @@
 import TodoListBusiness from '../model/todoListBusiness'
 import KEYS from '../common/keys'
+import { getName } from '../model/categoryTodoListBusiness'
+import templateTodoListItem from '../view/todoListItem.html'
+import Slip from '../libs/slip'
+
+function setCaretFinalString(elementEditable) {
+    let el = elementEditable;
+    let lengthInputElement = el.innerText.length;
+    let range = document.createRange();
+    let sel = window.getSelection();
+    range.setStart(el.childNodes[0], lengthInputElement);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    el.focus();
+}
+
 
 export default class todoListPresenter {
 
@@ -9,17 +25,19 @@ export default class todoListPresenter {
    */
   constructor ({
     elementBase,
-    idStore,
+    idTodoList,
     startWithFocus = false
   } = {}) {
 
     // atribui uma instancia de TodoList para a variável privada todo
-    this.todoListBusiness = new TodoListBusiness(idStore);
+    this.todoListBusiness = new TodoListBusiness(idTodoList);
 
     // associa os elementos HTML com as propriedades $element, #list e $input
     this.bindElements(elementBase);
 
-    // se foi passada uma lista no constructor, monta o todoList com estes itens
+    elementBase.querySelector('h2').innerText = getName(idTodoList);
+
+    // se existem itens já gravados, monta o todoList com estes itens
     if (this.todoListBusiness.getAll().length > 0) { this.renderAllItens(); }
 
     // trás o foco para o $input se o paramentro startWithFocus = true
@@ -27,6 +45,33 @@ export default class todoListPresenter {
 
     // Associa eventos de click, keyUp, ...
     this.addEventListeners();
+
+    this.$list.addEventListener('slip:beforereorder', function(e){
+        if (/demo-no-reorder/.test(e.target.className)) {
+            e.preventDefault();
+        }
+    }, false);
+
+    this.$list.addEventListener('slip:beforeswipe', function(e){
+        if (e.target.nodeName == 'INPUT' || /demo-no-swipe/.test(e.target.className)) {
+            e.preventDefault();
+        }
+    }, false);
+
+    this.$list.addEventListener('slip:beforewait', function(e){
+        if (e.target.className.indexOf('instant') > -1) e.preventDefault();
+    }, false);
+
+    this.$list.addEventListener('slip:afterswipe', function(e){
+        e.target.parentNode.appendChild(e.target);
+    }, false);
+
+    this.$list.addEventListener('slip:reorder', function(e){
+        e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);
+        return false;
+    }, false);
+
+    new Slip(this.$list);
   }
 
   bindElements (elementBase) {
@@ -50,8 +95,31 @@ export default class todoListPresenter {
       }
     });
     this.$list.addEventListener('click', event => {
-      if(event.target.classList.contains('remove-item')){
+      if(event.target.classList.contains('remove-item') || event.target.parentNode.classList.contains('remove-item')){
         this.removeItem(event.target.closest('[data-id]').dataset.id);
+      }
+    });
+    this.$list.addEventListener('dblclick', event => {
+      if(event.target.classList.contains('name-item')){
+        let inputElement = event.target;
+        inputElement.setAttribute('contenteditable', 'true');
+        inputElement.focus();
+        setCaretFinalString(inputElement);
+
+        inputElement.addEventListener('blur', function once(event) {
+          event.target.removeAttribute('contenteditable');
+          inputElement.removeEventListener('blur', once);
+        });
+
+      }
+    });
+    this.$list.addEventListener('change', event => {
+      if(event.target.classList.contains('checkbox-item')){
+        if(!event.target.checked){
+          this.unCheckItem(event.target.closest('[data-id]').dataset.id);
+        } else {
+          this.checkItem(event.target.closest('[data-id]').dataset.id);
+        }
       }
     });
   }
@@ -67,6 +135,24 @@ export default class todoListPresenter {
     }
   }
 
+  checkItem (id) {
+    try {
+      this.todoListBusiness.checkItem(id);
+      this.$list.querySelector(`[data-id="${id}"] .checkbox-item`).checked = true;
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
+  unCheckItem (id) {
+    try {
+      this.todoListBusiness.unCheckItem(id);
+      this.$list.querySelector(`[data-id="${id}"] .checkbox-item`).checked = false;
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
   removeItem (id) {
     try {
       this.todoListBusiness.removeItem(id);
@@ -77,7 +163,10 @@ export default class todoListPresenter {
   }
 
   renderItem (item) {
-    return `<li data-id="${item.id}"> <div> <div> <input type="checkbox" /> </div> <div class="name-item"> ${item.name} </div> <button type="button" class="remove-item">x</button> </div> </li>`;
+    if(item.checked){
+      item.checked = 'checked';
+    }
+    return templateTodoListItem(item);
   }
 
   renderAllItens () {
