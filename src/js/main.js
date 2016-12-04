@@ -1,12 +1,11 @@
 import TodoListPresenter from './presenter/todoListPresenter'
+import router from './router/index'
+import * as categoryTodoListPresenter from './presenter/categoryTodoListPresenter'
 
-const firstTodo = new TodoListPresenter({
-  idStore: 'firstTodo',
-  elementBase: document.getElementById('lista'),
-  startWithFocus: true
+categoryTodoListPresenter.renderListCategories('blablaibi');
+categoryTodoListPresenter.listeners({
+  $form: document.querySelector('#form-new-list'),
+  $list: document.querySelector('#categorias .itens')
 });
 
-const secondyTodo = new TodoListPresenter({
-  idStore: 'secondyTodo',
-  elementBase: document.getElementById('lista2')
-});
+router();
