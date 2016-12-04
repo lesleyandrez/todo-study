@@ -25,14 +25,11 @@ export default class TodoListBusiness {
     this.todoListStore.updateStore(this.getAll());
   }
 
-  updateItem (item) {
-    this.itens = this.itens.map( currentItem => {
-      if (currentItem.id == item.id){
-        return item;
-      } else {
-        return currentItem;
-      }
+  updateNameItem (item) {
+    let index = this.itens.findIndex( currentItem => {
+      return currentItem.id == item.id;
     });
+    this.itens[index].name = item.name;
     this.todoListStore.updateStore(this.getAll());
   }
 

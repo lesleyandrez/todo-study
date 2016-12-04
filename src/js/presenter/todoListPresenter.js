@@ -107,9 +107,14 @@ export default class todoListPresenter {
         setCaretFinalString(inputElement);
 
         inputElement.addEventListener('blur', function once(event) {
+          console.log(event.target.closest('[data-id]').dataset.id);
+          console.log(event.target.innerText);
+          let id = event.target.closest('[data-id]').dataset.id;
+          let name = event.target.innerText;
+          this.updateNameItem({ id, name });
           event.target.removeAttribute('contenteditable');
           inputElement.removeEventListener('blur', once);
-        });
+        }.bind(this));
 
       }
     });
@@ -130,6 +135,14 @@ export default class todoListPresenter {
       this.$list.insertAdjacentHTML('afterbegin', this.renderItem(item));
       this.$input.value = '';
       this.$input.focus();
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
+  updateNameItem (item) {
+    try {
+      this.todoListBusiness.updateNameItem(item);
     } catch (e) {
       console.error(e.message);
     }
