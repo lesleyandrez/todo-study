@@ -1,21 +1,21 @@
 export default class TodoListStore {
 
-  constructor (idStore) {
-    this.idStore = idStore;
-    if(localStorage.getItem(this.idStore) == null){
-      localStorage.setItem(this.idStore, '[]');
+  constructor (idTodoList) {
+    this.idTodoList = idTodoList;
+    if(localStorage.getItem(this.idTodoList) == null){
+      localStorage.setItem(this.idTodoList, '[]');
     }
   }
 
   getStore () {
-    return JSON.parse(localStorage.getItem(this.idStore));
+    return JSON.parse(localStorage.getItem(this.idTodoList));
   }
 
   updateStore (itens) {
-    localStorage.setItem(this.idStore, JSON.stringify(itens));
+    localStorage.setItem(this.idTodoList, JSON.stringify(itens));
   }
 
   clearStore () {
-    localStorage.setItem(this.idStore, '');
+    localStorage.setItem(this.idTodoList, '');
   }
 }

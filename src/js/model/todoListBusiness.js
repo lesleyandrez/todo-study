@@ -4,8 +4,8 @@ import gererateId from '../common/generateId'
 
 export default class TodoListBusiness {
 
-  constructor (idStore) {
-    this.todoListStore = new TodoListStore(idStore);
+  constructor (idTodoList) {
+    this.todoListStore = new TodoListStore(idTodoList);
     this.itens = this.todoListStore.getStore();
   }
 
