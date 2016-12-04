@@ -46,31 +46,7 @@ export default class todoListPresenter {
     // Associa eventos de click, keyUp, ...
     this.addEventListeners();
 
-    this.$list.addEventListener('slip:beforereorder', function(e){
-        if (/demo-no-reorder/.test(e.target.className)) {
-            e.preventDefault();
-        }
-    }, false);
-
-    this.$list.addEventListener('slip:beforeswipe', function(e){
-        if (e.target.nodeName == 'INPUT' || /demo-no-swipe/.test(e.target.className)) {
-            e.preventDefault();
-        }
-    }, false);
-
-    this.$list.addEventListener('slip:beforewait', function(e){
-        if (e.target.className.indexOf('instant') > -1) e.preventDefault();
-    }, false);
-
-    this.$list.addEventListener('slip:afterswipe', function(e){
-        e.target.parentNode.appendChild(e.target);
-    }, false);
-
-    this.$list.addEventListener('slip:reorder', function(e){
-        e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);
-        return false;
-    }, false);
-
+    // Adiciona comportamente de reordenação, com mouse e touch, com a lib Slip
     new Slip(this.$list);
   }
 
@@ -87,6 +63,7 @@ export default class todoListPresenter {
   }
 
   addEventListeners () {
+
     this.$input.addEventListener('keyup', event => {
       const input = event.target;
       if(event.keyCode == KEYS.ENTER){
@@ -94,11 +71,13 @@ export default class todoListPresenter {
         this.addItem({name});
       }
     });
+
     this.$list.addEventListener('click', event => {
       if(event.target.classList.contains('remove-item') || event.target.parentNode.classList.contains('remove-item')){
         this.removeItem(event.target.closest('[data-id]').dataset.id);
       }
     });
+
     this.$list.addEventListener('dblclick', event => {
       if(event.target.classList.contains('name-item')){
         let inputElement = event.target;
@@ -115,9 +94,9 @@ export default class todoListPresenter {
           event.target.removeAttribute('contenteditable');
           inputElement.removeEventListener('blur', once);
         }.bind(this));
-
       }
     });
+
     this.$list.addEventListener('change', event => {
       if(event.target.classList.contains('checkbox-item')){
         if(!event.target.checked){
@@ -127,6 +106,19 @@ export default class todoListPresenter {
         }
       }
     });
+
+    this.$list.addEventListener('slip:reorder', event => {
+      this.reorderTodoList(event.target, event.detail.insertBefore, event.detail.originalIndex, event.detail.spliceIndex);
+    }, false);
+  }
+
+  reorderTodoList (elementMoved, insertBeforeElement, originalIndex, spliceIndex) {
+    let todoList = this.todoListBusiness.getAll();
+    let itemToReorder = todoList[originalIndex];
+    let newTodoList = todoList.filter(item => itemToReorder.id != item.id);
+    newTodoList.splice(spliceIndex, 0, itemToReorder);
+    this.todoListBusiness.updateOrder(newTodoList);
+    elementMoved.parentNode.insertBefore(elementMoved, insertBeforeElement);
   }
 
   addItem (item) {
