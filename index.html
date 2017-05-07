@@ -1,38 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
+  <title> Todo </title>
   <meta charset="UTF-8">
-  <title>async/await</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="http://idangero.us/swiper/dist/css/swiper.min.css">
   <link rel="stylesheet" href="css/main.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
+  <!-- Swiper -->
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide menu">
 
-  <div class="wrap">
+          <section id="categorias" class="side-bar category-style">
+            <section class="list-categories">
+              <h1> Listas </h1>
+              <ul class="itens">
+                <li>Carregando...</li>
+              </ul>
+            </section>
+            <section class="form-new-category">
+              <form action="new-list" method="post" id="form-new-list">
+                <input type="text" autocomplete="off" placeholder="Estudo, Trabalho, ..." name="name-list" />
+                <button type="submit">
+                  Criar lista
+                </button>
+              </form>
+            </section>
+          </section>
 
-    <section id="categorias" class="side-bar category-style">
-      <section class="list-categories">
-        <h1> Listas </h1>
-        <ul class="itens">
-          <li>Carregando...</li>
-        </ul>
-      </section>
-      <section class="form-new-category">
-        <form action="new-list" method="post" id="form-new-list">
-          <input type="text" autocomplete="off" placeholder="Estudo, Trabalho, ..." name="name-list" />
-          <button type="submit">
-            Criar lista
-          </button>
-        </form>
-      </section>
-    </section>
+      </div>
+			<div class="swiper-slide content">
+				<section id='container-todos' class="main">
 
-    <section id='container-todos' class="main">
-
-    </section>
-
-  </div>
-
+        </section>
+			</div>
+		</div>
+	</div>
   <script src="js-es5/bundle.js"></script>
 </body>
 </html>

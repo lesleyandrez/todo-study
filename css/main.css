@@ -127,7 +127,8 @@ input {
   flex-direction: column; }
   .todo-style .wrap-list {
     flex: 1;
-    overflow-y: auto; }
+    overflow-y: auto;
+    min-height: calc( 100vh - 82px); }
     .todo-style .wrap-list .itens:focus {
       outline: none; }
   .todo-style header {
@@ -228,6 +229,16 @@ input {
   background-color: white !important;
   transform: translateZ(1000px);
   transition: box-shadow .3s; }
+
+.menu {
+  min-width: 100px;
+  width: 70%;
+  max-width: 320px;
+  background-color: #FAFAFA;
+  color: #fff; }
+
+.content {
+  width: 100%; }
 
 .wrap {
   display: flex;
